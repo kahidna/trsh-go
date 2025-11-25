@@ -1,3 +1,7 @@
+# Disclaimer
+
+I don't own this code, just fork and custom Dockerfile and then push it to registry
+
 ## trsh-go
 
 Telegram Remote-Shell is a Golang script that let you comunicate with your Linux server using a Telegram Bot  <br>
