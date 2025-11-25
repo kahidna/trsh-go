@@ -1,4 +1,4 @@
-FROM golang:1.13
+FROM golang:1.13 AS builder
 
 RUN mkdir -p /app
 
@@ -12,4 +12,18 @@ ADD . /app
 
 RUN go build ./trsh.go
 
-CMD ["./trsh"]
+# ----------------------------------------------------------------------
+FROM alpine:latest
+
+# Set the working directory
+WORKDIR /usr/local/bin
+
+RUN apk add gcompat bash openssh-client net-tools
+
+# Copy the compiled binary from the 'builder' stage
+# The 'app' binary is copied to the final image
+COPY --from=builder /app/trsh .
+
+WORKDIR /root
+
+CMD ["/usr/local/bin/trsh"]
